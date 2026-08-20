@@ -10,8 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 const NOME_SALVO = "blog-dev:nome"
 
 export function CommentForm({ postId, slug }: { postId: string; slug: string }) {
-  const formRef = useRef<HTMLFormElement>(null)
-  const [name, setName] = useState("")
+  const nameRef = useRef<HTMLInputElement>(null)
   const [content, setContent] = useState("")
 
   const [state, formAction, pending] = useActionState(
@@ -26,20 +25,24 @@ export function CommentForm({ postId, slug }: { postId: string; slug: string }) 
     {}
   )
 
-  // Quem já comentou antes não precisa digitar o nome de novo.
+  // Quem já comentou antes não precisa digitar o nome de novo. Escrevemos no
+  // DOM em vez de no estado: no servidor não existe localStorage, e um valor
+  // inicial diferente entre servidor e cliente quebraria a hidratação.
   useEffect(() => {
-    setName(localStorage.getItem(NOME_SALVO) ?? "")
+    const salvo = localStorage.getItem(NOME_SALVO)
+    if (salvo && nameRef.current && !nameRef.current.value) {
+      nameRef.current.value = salvo
+    }
   }, [])
 
   return (
-    <form ref={formRef} action={formAction} className="flex flex-col gap-4">
+    <form action={formAction} className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <Label htmlFor="authorName">Seu nome</Label>
         <Input
           id="authorName"
           name="authorName"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
+          ref={nameRef}
           maxLength={50}
           required
           className="h-10 max-w-xs"

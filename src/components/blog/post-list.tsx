@@ -19,17 +19,7 @@ export function PostList({ posts }: { posts: PostPreview[] }) {
   return (
     <ul className="flex flex-col gap-4">
       {posts.map((post) => (
-        <li
-          key={post.slug}
-          className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]"
-        >
-          <span
-            aria-hidden="true"
-            className="hidden pt-6 font-mono text-sm text-keyword md:block"
-          >
-            -
-          </span>
-
+        <li key={post.slug}>
           <Link
             href={`/blog/${post.slug}`}
             className="group block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"

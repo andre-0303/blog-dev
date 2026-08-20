@@ -17,18 +17,13 @@ export default async function CategoriaPage({
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-16">
-      <div className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-        <span aria-hidden="true" className="hidden font-mono text-2xl text-keyword md:block">
-          #
-        </span>
-        <div>
+      <div>
           <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
             Categoria
           </p>
           <h1 className="mt-2 font-display text-4xl tracking-tight uppercase sm:text-5xl">
             {category.name}
           </h1>
-        </div>
       </div>
 
       <div className="mt-10">

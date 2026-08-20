@@ -13,13 +13,7 @@ export default async function Home() {
   return (
     <>
       <section className="mx-auto w-full max-w-5xl px-6 pt-16 pb-20 sm:pt-24 sm:pb-28">
-        <div className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-          <span
-            aria-hidden="true"
-            className="rise hidden pt-3 font-mono text-2xl text-keyword md:block"
-          >
-            #
-          </span>
+        <div>
           <h1
             className="rise font-display text-[clamp(2.75rem,9vw,5.5rem)] leading-[0.9] font-extrabold tracking-[-0.035em] uppercase"
             style={{ animationDelay: "80ms" }}
@@ -29,13 +23,6 @@ export default async function Home() {
             tecnologia
           </h1>
 
-          <span
-            aria-hidden="true"
-            className="rise mt-8 hidden font-mono text-sm text-keyword md:block"
-            style={{ animationDelay: "160ms" }}
-          >
-            &gt;
-          </span>
           <p
             className="rise mt-8 max-w-xl text-base/relaxed text-muted-foreground sm:text-lg/relaxed"
             style={{ animationDelay: "200ms" }}
@@ -45,7 +32,7 @@ export default async function Home() {
           </p>
 
           <div
-            className="rise mt-10 flex flex-wrap gap-3 md:col-start-2"
+            className="rise mt-10 flex flex-wrap gap-3"
             style={{ animationDelay: "300ms" }}
           >
             <Button
@@ -68,13 +55,7 @@ export default async function Home() {
       </section>
 
       <section className="mx-auto w-full max-w-5xl px-6 pb-24">
-        <div className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-          <span
-            aria-hidden="true"
-            className="hidden font-mono text-sm text-keyword md:block"
-          >
-            ##
-          </span>
+        <div>
           <div className="flex items-baseline justify-between gap-4">
             <h2 className="font-display text-lg tracking-tight uppercase">
               Artigos em destaque
@@ -87,14 +68,14 @@ export default async function Home() {
             </Link>
           </div>
 
-          <Separator className="mt-4 md:col-start-2" />
+          <Separator className="mt-4" />
         </div>
 
         <div className="mt-6">
           {posts.length > 0 ? (
             <PostList posts={posts} />
           ) : (
-            <div className="px-2 py-12 md:ml-18">
+            <div className="px-2 py-12">
               <p className="text-sm text-muted-foreground">
                 Nenhum artigo publicado ainda.
               </p>

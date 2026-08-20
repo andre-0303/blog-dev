@@ -66,24 +66,16 @@ const stack = [
   { grupo: "Dados", itens: ["PostgreSQL", "Neon", "Prisma ORM"] },
 ]
 
-function SectionTitle({ token, children }: { token: string; children: string }) {
+function SectionTitle({ children }: { children: string }) {
   return (
-    <div className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-      <span aria-hidden="true" className="hidden font-mono text-sm text-keyword md:block">
-        {token}
-      </span>
-      <h2 className="font-display text-lg tracking-tight uppercase">{children}</h2>
-    </div>
+    <h2 className="font-display text-lg tracking-tight uppercase">{children}</h2>
   )
 }
 
 export default function SobrePage() {
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-24">
-      <div className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-        <span aria-hidden="true" className="hidden pt-3 font-mono text-2xl text-keyword md:block">
-          #
-        </span>
+      <div>
         <div>
           <h1 className="font-display text-[clamp(2.25rem,7vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] uppercase">
             Um laboratório
@@ -99,10 +91,7 @@ export default function SobrePage() {
       </div>
 
       <section className="mt-20">
-        <div className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-          <span aria-hidden="true" className="hidden font-mono text-sm text-keyword md:block">
-            &gt;
-          </span>
+        <div>
           <div className="flex flex-col gap-8 sm:flex-row">
             <div className="flex-1">
               <p className="font-mono text-[0.7rem] tracking-widest text-muted-foreground uppercase">
@@ -129,9 +118,9 @@ export default function SobrePage() {
       <Separator className="mt-20" />
 
       <section className="mt-16">
-        <SectionTitle token="##">Como um artigo nasce</SectionTitle>
+        <SectionTitle>Como um artigo nasce</SectionTitle>
 
-        <ol className="mt-8 border-t border-border md:ml-[calc(3rem+1.5rem)]">
+        <ol className="mt-8 border-t border-border">
           {processo.map((etapa, index) => (
             <li
               key={etapa.nome}
@@ -151,7 +140,7 @@ export default function SobrePage() {
           ))}
         </ol>
 
-        <p className="mt-6 max-w-xl text-sm/relaxed text-muted-foreground md:ml-[calc(3rem+1.5rem)]">
+        <p className="mt-6 max-w-xl text-sm/relaxed text-muted-foreground">
           Menos teoria isolada, mais experimentação. Um artigo mostra o que
           fazer, por que fazer e o que acontece quando a solução encosta na
           realidade.
@@ -159,9 +148,9 @@ export default function SobrePage() {
       </section>
 
       <section className="mt-20">
-        <SectionTitle token="##">Três objetivos</SectionTitle>
+        <SectionTitle>Três objetivos</SectionTitle>
 
-        <dl className="mt-8 grid gap-px border border-border bg-border md:ml-[calc(3rem+1.5rem)] md:grid-cols-3">
+        <dl className="mt-8 grid gap-px border border-border bg-border md:grid-cols-3">
           {objetivos.map((objetivo) => (
             <div key={objetivo.titulo} className="bg-background p-6">
               <dt className="font-display text-xl tracking-tight">{objetivo.titulo}</dt>
@@ -174,9 +163,9 @@ export default function SobrePage() {
       </section>
 
       <section className="mt-20">
-        <SectionTitle token="##">O que aparece por aqui</SectionTitle>
+        <SectionTitle>O que aparece por aqui</SectionTitle>
 
-        <ul className="mt-8 grid gap-x-8 gap-y-5 md:ml-[calc(3rem+1.5rem)] sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
           {categorias.map((categoria) => (
             <li key={categoria.nome} className="flex gap-3">
               <categoria.icone
@@ -194,9 +183,9 @@ export default function SobrePage() {
       </section>
 
       <section className="mt-20">
-        <SectionTitle token="##">Stack</SectionTitle>
+        <SectionTitle>Stack</SectionTitle>
 
-        <div className="mt-8 flex flex-col gap-6 md:ml-[calc(3rem+1.5rem)]">
+        <div className="mt-8 flex flex-col gap-6">
           {stack.map((bloco) => (
             <div key={bloco.grupo} className="flex flex-col gap-3 sm:flex-row sm:gap-6">
               <p className="w-28 shrink-0 pt-1 font-mono text-[0.7rem] tracking-widest text-muted-foreground uppercase">
@@ -215,7 +204,7 @@ export default function SobrePage() {
           ))}
         </div>
 
-        <p className="mt-6 text-sm/relaxed text-muted-foreground md:ml-[calc(3rem+1.5rem)]">
+        <p className="mt-6 text-sm/relaxed text-muted-foreground">
           O blog é escrito em Markdown e renderizado por React — a mesma pilha
           que os artigos discutem.
         </p>
@@ -223,10 +212,7 @@ export default function SobrePage() {
 
       <Separator className="mt-20" />
 
-      <section className="mt-16 grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-        <span aria-hidden="true" className="hidden font-mono text-sm text-keyword md:block">
-          &gt;
-        </span>
+      <section className="mt-16">
         <div>
           <p className="font-display text-2xl leading-snug tracking-tight text-balance sm:text-3xl">
             Construir. Experimentar. Errar. Aprender. Documentar. Evoluir.

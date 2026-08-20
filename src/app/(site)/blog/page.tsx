@@ -11,18 +11,13 @@ export default async function BlogPage() {
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-16">
-      <div className="grid gap-x-6 md:grid-cols-[3rem_minmax(0,1fr)]">
-        <span aria-hidden="true" className="hidden font-mono text-2xl text-keyword md:block">
-          #
-        </span>
-        <div>
+      <div>
           <h1 className="font-display text-4xl tracking-tight uppercase sm:text-5xl">
             Artigos
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
             {posts.length === 1 ? "1 artigo publicado" : `${posts.length} artigos publicados`}
           </p>
-        </div>
       </div>
 
       <div className="mt-10">
