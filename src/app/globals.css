@@ -167,6 +167,9 @@
   --sidebar-accent-foreground: #0d0d0d;
   --sidebar-border: #e0e0e0;
   --sidebar-ring: #d6340f;
+
+  /* Barra de rolagem e controles nativos acompanham o tema. */
+  color-scheme: light;
 }
 
 .dark {
@@ -198,6 +201,8 @@
   --sidebar-accent-foreground: #f2f2f2;
   --sidebar-border: #262626;
   --sidebar-ring: #ff6b45;
+
+  color-scheme: dark;
 }
 
 @layer base {

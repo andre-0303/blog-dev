@@ -51,12 +51,26 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `
+try {
+  var escolha = localStorage.getItem("theme");
+  var escuro = escolha === "dark" || (!escolha && matchMedia("(prefers-color-scheme: dark)").matches);
+  if (escuro) document.documentElement.classList.add("dark");
+} catch (e) {}
+`
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
+      suppressHydrationWarning
       className={cn("h-full antialiased", display.variable, sans.variable, mono.variable)}
     >
+      <head>
+        {/* Roda antes da primeira pintura: sem isso a página aparece clara e
+            pisca para o escuro depois que o React hidrata. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
