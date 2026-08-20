@@ -20,11 +20,12 @@ const dateFormat = new Intl.DateTimeFormat("pt-BR", {
 })
 
 export default async function AdminPage() {
-  const [published, drafts, categories, tags, recent] = await Promise.all([
+  const [published, drafts, categories, tags, comments, recent] = await Promise.all([
     prisma.post.count({ where: { published: true } }),
     prisma.post.count({ where: { published: false } }),
     prisma.category.count(),
     prisma.tag.count(),
+    prisma.comment.count(),
     prisma.post.findMany({
       orderBy: { updatedAt: "desc" },
       take: 5,
@@ -37,6 +38,7 @@ export default async function AdminPage() {
     { label: "Rascunhos", value: drafts, href: "/admin/posts?status=rascunhos" },
     { label: "Categorias", value: categories, href: "/admin/categorias" },
     { label: "Tags", value: tags, href: "/admin/tags" },
+    { label: "Comentários", value: comments, href: "/admin/comentarios" },
   ]
 
   return (
@@ -50,7 +52,7 @@ export default async function AdminPage() {
         />
       </div>
 
-      <dl className="grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+      <dl className="grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
         {stats.map((stat) => (
           <Link
             key={stat.label}

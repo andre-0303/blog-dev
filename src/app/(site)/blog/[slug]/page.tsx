@@ -2,6 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+import { CommentSection } from "@/components/blog/comment-section"
 import { Badge } from "@/components/ui/badge"
 import { getPost, readingMinutes } from "@/lib/posts"
 
@@ -60,6 +61,8 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
           <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
         </div>
       </article>
+
+      <CommentSection postId={post.id} slug={post.slug} />
 
       <Link
         href="/blog"

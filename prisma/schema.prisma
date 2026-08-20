@@ -38,6 +38,7 @@ model Post {
   category    Category?  @relation(fields: [categoryId], references: [id])
 
   tags        PostTag[]
+  comments    Comment[]
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -71,4 +72,22 @@ model PostTag {
   tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([postId, tagId])
+}
+
+/// Comentário anônimo: sem conta, só nome e texto.
+model Comment {
+  id         String   @id @default(cuid())
+  authorName String
+  content    String
+
+  postId     String
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  /// sha256(ip + AUTH_SECRET). Só para limitar rajadas — o IP em si nunca é gravado.
+  ipHash     String?
+
+  createdAt  DateTime @default(now())
+
+  @@index([postId, createdAt])
+  @@index([ipHash, createdAt])
 }

@@ -1,6 +1,6 @@
 # 🧑‍💻 Blog Dev
 
-> Um laboratório público para tecnologia, desenvolvimento de software e inteligência artificial.
+>  
 
 O **Blog Dev** é uma plataforma de conteúdo criada para compartilhar experiências reais durante a construção de projetos, experimentos com tecnologias, estudos, decisões de arquitetura, erros, acertos e descobertas no desenvolvimento de software.
 

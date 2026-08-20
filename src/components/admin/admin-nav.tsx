@@ -26,6 +26,7 @@ const groups: { title: string; items: Item[] }[] = [
     items: [
       { href: "/admin/categorias", label: "Categorias" },
       { href: "/admin/tags", label: "Tags" },
+      { href: "/admin/comentarios", label: "Comentários" },
     ],
   },
 ]
