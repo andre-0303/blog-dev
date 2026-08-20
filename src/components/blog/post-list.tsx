@@ -36,18 +36,22 @@ export function PostList({ posts }: { posts: PostPreview[] }) {
           >
             <Card className="[--card-spacing:--spacing(6)] transition-colors group-hover:bg-muted/50 group-hover:ring-keyword">
               <CardHeader className="gap-3">
-                <Badge
-                  variant="outline"
-                  className="font-mono tracking-widest text-muted-foreground uppercase"
-                >
-                  {post.category}
-                </Badge>
+                {post.category && (
+                  <Badge
+                    variant="outline"
+                    className="font-mono tracking-widest text-muted-foreground uppercase"
+                  >
+                    {post.category}
+                  </Badge>
+                )}
                 <CardTitle className="text-2xl leading-tight tracking-tight text-balance sm:text-3xl">
                   {post.title}
                 </CardTitle>
-                <CardDescription className="max-w-prose text-sm/relaxed">
-                  {post.excerpt}
-                </CardDescription>
+                {post.excerpt && (
+                  <CardDescription className="max-w-prose text-sm/relaxed">
+                    {post.excerpt}
+                  </CardDescription>
+                )}
               </CardHeader>
 
               <CardFooter className="justify-between font-mono text-xs text-muted-foreground">

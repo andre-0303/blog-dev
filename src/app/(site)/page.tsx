@@ -2,41 +2,12 @@ import Link from "next/link";
 import { PostList } from "@/components/blog/post-list";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import type { PostPreview } from "@/types/post";
+import { listPosts, toPostPreview } from "@/lib/posts";
 
-// Mock enquanto o banco está vazio.
-// Para ligar no banco: `const posts = await listPosts()` e torne o componente async.
-const posts: PostPreview[] = [
-  {
-    slug: "construindo-apis-com-nextjs",
-    title: "Construindo APIs com Next.js",
-    excerpt:
-      "Route handlers, validação de entrada e tratamento de erro em uma API que você não vai ter vergonha de manter daqui a seis meses.",
-    category: "Next.js",
-    minutes: 8,
-    publishedAt: new Date(2026, 7, 14),
-  },
-  {
-    slug: "introducao-ao-react",
-    title: "Introdução ao React",
-    excerpt:
-      "Componentes, estado e o ciclo de renderização — os três conceitos que explicam quase tudo que o React faz.",
-    category: "React",
-    minutes: 6,
-    publishedAt: new Date(2026, 7, 2),
-  },
-  {
-    slug: "desenvolvimento-web-com-typescript",
-    title: "Desenvolvimento web com TypeScript",
-    excerpt:
-      "Tipagem que ajuda em vez de atrapalhar: inferência, tipos utilitários e onde vale a pena anotar na mão.",
-    category: "TypeScript",
-    minutes: 11,
-    publishedAt: new Date(2026, 6, 21),
-  },
-];
+export const dynamic = "force-dynamic";
 
-export default function Home() {
+export default async function Home() {
+  const posts = (await listPosts()).slice(0, 3).map(toPostPreview);
   const latest = posts[0];
 
   return (
