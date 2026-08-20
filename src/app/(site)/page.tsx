@@ -6,7 +6,9 @@ import { JsonLd } from "@/components/blog/json-ld";
 import { listPosts, toPostPreview } from "@/lib/posts";
 import { absoluteUrl, site } from "@/lib/site";
 
-export const dynamic = "force-dynamic";
+// Página estática revalidada de hora em hora. Publicar ou editar no /admin
+// chama revalidatePath e atualiza na hora — o prazo é só a rede de segurança.
+export const revalidate = 3600
 
 export const metadata = {
   alternates: { canonical: "/" },

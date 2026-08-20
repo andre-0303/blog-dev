@@ -45,3 +45,5 @@ next-env.d.ts
 .claude
 .agents
 .windsurf
+
+DEPLOY.md

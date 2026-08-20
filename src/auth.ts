@@ -4,11 +4,28 @@ import { redirect } from "next/navigation"
 import { z } from "zod"
 import { DUMMY_HASH, verifyPassword } from "@/lib/password"
 import { prisma } from "@/lib/prisma"
+import { ipFingerprint } from "@/lib/request"
 
 const credentialsSchema = z.object({
   email: z.email(),
   password: z.string().min(1),
 })
+
+/** Cinco erros em quinze minutos e a origem fica de castigo. */
+const LOGIN_LIMIT = { tentativas: 5, janelaMs: 15 * 60_000 }
+
+async function excedeuTentativas(ipHash: string) {
+  const desde = new Date(Date.now() - LOGIN_LIMIT.janelaMs)
+
+  // Aproveita a ida ao banco para varrer o que já expirou.
+  await prisma.loginAttempt.deleteMany({ where: { createdAt: { lt: desde } } })
+
+  const falhas = await prisma.loginAttempt.count({
+    where: { ipHash, createdAt: { gte: desde } },
+  })
+
+  return falhas >= LOGIN_LIMIT.tentativas
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
@@ -21,14 +38,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const parsed = credentialsSchema.safeParse(raw)
         if (!parsed.success) return null
 
+        const ipHash = await ipFingerprint()
+        if (ipHash && (await excedeuTentativas(ipHash))) return null
+
+        const registrarFalha = async () => {
+          if (ipHash) await prisma.loginAttempt.create({ data: { ipHash } })
+        }
+
         const user = await prisma.user.findUnique({
           where: { email: parsed.data.email },
         })
         if (!user) {
           verifyPassword(parsed.data.password, DUMMY_HASH)
+          await registrarFalha()
           return null
         }
-        if (!verifyPassword(parsed.data.password, user.password)) return null
+        if (!verifyPassword(parsed.data.password, user.password)) {
+          await registrarFalha()
+          return null
+        }
+
+        // Login certo zera o contador da origem.
+        if (ipHash) await prisma.loginAttempt.deleteMany({ where: { ipHash } })
 
         return { id: user.id, name: user.name, email: user.email }
       },

@@ -1,11 +1,10 @@
 "use server"
 
-import { createHash } from "node:crypto"
 import { revalidatePath } from "next/cache"
-import { headers } from "next/headers"
 import { z } from "zod"
 import { requireUser } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { ipFingerprint } from "@/lib/request"
 import { commentSchema } from "@/lib/validations/comment"
 
 export type CommentFormState = {
@@ -15,17 +14,6 @@ export type CommentFormState = {
 }
 
 const RATE_LIMIT = { comentarios: 3, janelaMs: 60_000 }
-
-/** Identifica a origem para limitar rajadas sem guardar o IP em texto claro. */
-async function ipFingerprint() {
-  const forwarded = (await headers()).get("x-forwarded-for")
-  const ip = forwarded?.split(",")[0]?.trim()
-  if (!ip) return null
-
-  return createHash("sha256")
-    .update(`${ip}${process.env.AUTH_SECRET ?? ""}`)
-    .digest("hex")
-}
 
 export async function createComment(
   postId: string,

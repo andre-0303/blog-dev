@@ -7,15 +7,29 @@ import { CommentSection } from "@/components/blog/comment-section"
 import { JsonLd } from "@/components/blog/json-ld"
 import { Badge } from "@/components/ui/badge"
 import { getPost, readingMinutes } from "@/lib/posts"
+import { prisma } from "@/lib/prisma"
 import { absoluteUrl, site } from "@/lib/site"
 
-export const dynamic = "force-dynamic"
+// Página estática revalidada de hora em hora. Publicar ou editar no /admin
+// chama revalidatePath e atualiza na hora — o prazo é só a rede de segurança.
+export const revalidate = 3600
 
 const dateFormat = new Intl.DateTimeFormat("pt-BR", {
   day: "2-digit",
   month: "long",
   year: "numeric",
 })
+
+/** Pré-renderiza os artigos publicados no build. Slug novo continua sendo
+ *  renderizado sob demanda e depois fica em cache. */
+export async function generateStaticParams() {
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    select: { slug: true },
+  })
+
+  return posts.map((post) => ({ slug: post.slug }))
+}
 
 export async function generateMetadata({
   params,

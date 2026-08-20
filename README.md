@@ -287,31 +287,47 @@ O projeto será desenvolvido de forma incremental:
 - [x] Configuração inicial do Next.js
 - [x] Tailwind CSS + shadcn/ui
 - [x] Integração Neon PostgreSQL + Prisma
-- [ ] Página inicial
-- [ ] Listagem de posts
-- [ ] Página individual do post
-- [ ] Listagem por Categorias e Tags
+- [x] Página inicial
+- [x] Listagem de posts
+- [x] Página individual do post
+- [x] Listagem por Categorias
+- [ ] Listagem por Tags *(as tags são cadastradas e ligadas aos posts, mas ainda não têm página pública)*
 - [ ] Sistema de busca
-- [ ] SEO básico
+- [x] SEO básico
 
 ### 2. CMS
-- [ ] Autenticação
-- [ ] Dashboard administrativo
-- [ ] CRUD de Posts (Criar, Editar, Excluir, Rascunhos, Publicação)
-- [ ] Gerenciamento de Categorias e Tags
-- [ ] Editor Markdown integrado
+- [x] Autenticação
+- [x] Dashboard administrativo
+- [x] CRUD de Posts (Criar, Editar, Excluir, Rascunhos, Publicação)
+- [x] Gerenciamento de Categorias e Tags
+- [x] Editor Markdown integrado
 
 ### 3. Evolução
-- [ ] Upload de imagens
-- [ ] Preview de artigos antes de publicar
+- [ ] Upload de imagens *(o campo `coverImage` existe no schema e ainda não é usado)*
+- [x] Preview de artigos antes de publicar
 - [ ] Posts relacionados
-- [ ] Geração de Sitemap e RSS
-- [ ] Metadados Open Graph dinâmicos
+- [x] Geração de Sitemap
+- [ ] Geração de RSS
+- [x] Metadados Open Graph dinâmicos
 - [ ] Analytics
 - [ ] Newsletter
-- [ ] Sistema de Comentários
-- [ ] Sistema de permissões
+- [x] Sistema de Comentários
+- [ ] Sistema de permissões *(existe um único papel: quem entra no `/admin` pode tudo)*
 - [ ] Agendamento de publicação
+
+### 4. Entregue fora do plano original
+
+Coisas que não estavam na lista e acabaram entrando pelo caminho:
+
+- [x] Identidade visual própria — paleta de acento único, tipografia e componentes
+- [x] Modo escuro com switch no header, sem piscar no carregamento
+- [x] Renderização estática com ISR e revalidação disparada pelo `/admin`
+- [x] Páginas de 404 e de erro dentro da identidade do site
+- [x] Limite de tentativas no login e nos comentários
+- [x] JSON-LD (`BlogPosting` e `Blog`) e imagens de Open Graph geradas por artigo
+- [x] Cabeçalhos de segurança e testes das funções puras (`pnpm test`)
+- [x] `DEPLOY.md` com variáveis, ordem do build e criação do primeiro usuário
+
 
 ---
 

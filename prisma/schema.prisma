@@ -91,3 +91,13 @@ model Comment {
   @@index([postId, createdAt])
   @@index([ipHash, createdAt])
 }
+
+/// Tentativas de login que falharam. Serve só para travar força bruta;
+/// as linhas antigas são descartadas a cada nova checagem.
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  ipHash    String
+  createdAt DateTime @default(now())
+
+  @@index([ipHash, createdAt])
+}

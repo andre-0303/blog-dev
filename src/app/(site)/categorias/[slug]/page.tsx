@@ -4,7 +4,18 @@ import { PostList } from "@/components/blog/post-list"
 import { listPosts, toPostPreview } from "@/lib/posts"
 import { prisma } from "@/lib/prisma"
 
-export const dynamic = "force-dynamic"
+// Página estática revalidada de hora em hora. Publicar ou editar no /admin
+// chama revalidatePath e atualiza na hora — o prazo é só a rede de segurança.
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const categories = await prisma.category.findMany({
+    where: { posts: { some: { published: true } } },
+    select: { slug: true },
+  })
+
+  return categories.map((category) => ({ slug: category.slug }))
+}
 
 export async function generateMetadata({
   params,

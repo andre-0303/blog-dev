@@ -2,7 +2,9 @@ import Link from "next/link"
 import { PostList } from "@/components/blog/post-list"
 import { listPosts, toPostPreview } from "@/lib/posts"
 
-export const dynamic = "force-dynamic"
+// Página estática revalidada de hora em hora. Publicar ou editar no /admin
+// chama revalidatePath e atualiza na hora — o prazo é só a rede de segurança.
+export const revalidate = 3600
 
 export const metadata = {
   title: "Artigos",
