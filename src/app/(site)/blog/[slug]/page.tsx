@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { getPost } from "@/actions/posts"
+import { getPost } from "@/lib/posts"
 
 export const dynamic = "force-dynamic"
 

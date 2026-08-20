@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { listPosts } from "@/actions/posts"
+import { listPosts } from "@/lib/posts"
 
 export const dynamic = "force-dynamic"
 

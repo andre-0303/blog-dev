@@ -78,6 +78,7 @@ export default function Home() {
             style={{ animationDelay: "300ms" }}
           >
             <Button
+              nativeButton={false}
               className="h-11 px-6 text-sm"
               render={
                 <Link href={latest ? `/blog/${latest.slug}` : "/blog"}>
@@ -86,6 +87,7 @@ export default function Home() {
               }
             />
             <Button
+              nativeButton={false}
               variant="outline"
               className="h-11 px-6 text-sm"
               render={<Link href="/blog">Ver todos os artigos</Link>}
