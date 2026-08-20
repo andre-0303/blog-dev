@@ -1,9 +1,30 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { PostList } from "@/components/blog/post-list"
 import { listPosts, toPostPreview } from "@/lib/posts"
 import { prisma } from "@/lib/prisma"
 
 export const dynamic = "force-dynamic"
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/categorias/[slug]">): Promise<Metadata> {
+  const { slug } = await params
+  const category = await prisma.category.findUnique({ where: { slug } })
+
+  if (!category) {
+    return { title: "Categoria não encontrada", robots: { index: false, follow: false } }
+  }
+
+  const url = `/categorias/${category.slug}`
+
+  return {
+    title: category.name,
+    description: `Artigos do Blog Dev sobre ${category.name}.`,
+    alternates: { canonical: url },
+    openGraph: { url, title: category.name },
+  }
+}
 
 export default async function CategoriaPage({
   params,

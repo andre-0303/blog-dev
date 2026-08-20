@@ -3,6 +3,13 @@ import { prisma } from "@/lib/prisma"
 
 export const dynamic = "force-dynamic"
 
+export const metadata = {
+  title: "Categorias",
+  description: "Os assuntos cobertos pelo Blog Dev.",
+  alternates: { canonical: "/categorias" },
+  openGraph: { url: "/categorias", title: "Categorias" },
+}
+
 export default async function CategoriasPage() {
   const categories = await prisma.category.findMany({
     orderBy: { name: "asc" },

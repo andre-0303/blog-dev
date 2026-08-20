@@ -15,7 +15,9 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata = {
-  title: "Sobre · Blog Dev",
+  title: "Sobre",
+  alternates: { canonical: "/sobre" },
+  openGraph: { url: "/sobre", title: "Sobre o Blog Dev" },
   description:
     "Um laboratório público de desenvolvimento: projetos construídos do zero, experimentos, decisões de arquitetura e o que deu errado no caminho.",
 }

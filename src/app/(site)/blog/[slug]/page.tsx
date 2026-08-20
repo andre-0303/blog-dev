@@ -1,10 +1,13 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { CommentSection } from "@/components/blog/comment-section"
+import { JsonLd } from "@/components/blog/json-ld"
 import { Badge } from "@/components/ui/badge"
 import { getPost, readingMinutes } from "@/lib/posts"
+import { absoluteUrl, site } from "@/lib/site"
 
 export const dynamic = "force-dynamic"
 
@@ -14,6 +17,44 @@ const dateFormat = new Intl.DateTimeFormat("pt-BR", {
   year: "numeric",
 })
 
+export async function generateMetadata({
+  params,
+}: PageProps<"/blog/[slug]">): Promise<Metadata> {
+  const { slug } = await params
+  const post = await getPost(slug)
+
+  if (!post) {
+    return { title: "Artigo não encontrado", robots: { index: false, follow: false } }
+  }
+
+  const url = `/blog/${post.slug}`
+  const description = post.excerpt ?? `${post.content.slice(0, 155).trim()}…`
+
+  return {
+    title: post.title,
+    description,
+    alternates: { canonical: url },
+    authors: [{ name: post.author.name }],
+    openGraph: {
+      type: "article",
+      url,
+      title: post.title,
+      description,
+      siteName: site.name,
+      locale: site.locale,
+      publishedTime: post.createdAt.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
+      authors: [post.author.name],
+      tags: post.tags.map(({ tag }) => tag.name),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description,
+    },
+  }
+}
+
 export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params
   const post = await getPost(slug)
@@ -21,6 +62,24 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-16">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt ?? undefined,
+          datePublished: post.createdAt.toISOString(),
+          dateModified: post.updatedAt.toISOString(),
+          author: { "@type": "Person", name: post.author.name },
+          publisher: { "@type": "Organization", name: site.name },
+          mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+          articleSection: post.category?.name,
+          keywords: post.tags.map(({ tag }) => tag.name).join(", ") || undefined,
+          inLanguage: "pt-BR",
+          wordCount: post.content.trim().split(/\s+/).length,
+        }}
+      />
+
       <article>
         <header className="flex flex-col gap-4">
           {post.category && (

@@ -2,9 +2,15 @@ import Link from "next/link";
 import { PostList } from "@/components/blog/post-list";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { JsonLd } from "@/components/blog/json-ld";
 import { listPosts, toPostPreview } from "@/lib/posts";
+import { absoluteUrl, site } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default async function Home() {
   const posts = (await listPosts()).slice(0, 3).map(toPostPreview);
@@ -12,6 +18,24 @@ export default async function Home() {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          name: site.name,
+          description: site.description,
+          url: absoluteUrl("/"),
+          inLanguage: "pt-BR",
+          author: { "@type": "Person", name: site.author },
+          blogPost: posts.map((post) => ({
+            "@type": "BlogPosting",
+            headline: post.title,
+            datePublished: post.publishedAt.toISOString(),
+            url: absoluteUrl(`/blog/${post.slug}`),
+          })),
+        }}
+      />
+
       <section className="mx-auto w-full max-w-5xl px-6 pt-16 pb-20 sm:pt-24 sm:pb-28">
         <div>
           <h1

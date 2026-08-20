@@ -4,7 +4,13 @@ import { listPosts, toPostPreview } from "@/lib/posts"
 
 export const dynamic = "force-dynamic"
 
-export const metadata = { title: "Blog · Blog Dev" }
+export const metadata = {
+  title: "Artigos",
+  description:
+    "Todos os artigos do Blog Dev: projetos, experimentos e decisões de arquitetura documentados enquanto acontecem.",
+  alternates: { canonical: "/blog" },
+  openGraph: { url: "/blog", title: "Artigos" },
+}
 
 export default async function BlogPage() {
   const posts = (await listPosts()).map(toPostPreview)

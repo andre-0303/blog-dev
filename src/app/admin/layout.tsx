@@ -11,7 +11,10 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 
 export const dynamic = "force-dynamic"
 
-export const metadata = { title: "Admin · Blog Dev" }
+export const metadata = {
+  title: { default: "Admin", template: "%s · Admin · Blog Dev" },
+  robots: { index: false, follow: false },
+}
 
 export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
   const user = await requireUser()
